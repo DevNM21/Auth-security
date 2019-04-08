@@ -1,10 +1,10 @@
-<%- include('partials/header') %>
+<%- include('header') %>
 
 <div class="container mt-5">
-  <h1>Login</h1>
+  <center><h1>Login</h1></center>
 
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-8 container-fluid">
       <div class="card">
         <div class="card-body">
 
@@ -18,9 +18,15 @@
               <label for="password">Password</label>
               <input type="password" class="form-control" name="password">
             </div>
-            <button type="submit" class="btn btn-dark">Login</button>
+            <button type="submit" class="btn btn-outline-dark">Login</button> <br>
+            
           </form>
-
+          <div class="container-fluid" >
+          <h4>Don't have an account yet?</h4>
+          <a href="/register">
+          <button class="btn btn-outline-danger">Register</button>
+          </a>
+        </div>
         </div>
       </div>
     </div>
@@ -39,4 +45,4 @@
   </div>
 </div>
 
-<%- include('partials/footer') %>
+<%- include('footer') %>
