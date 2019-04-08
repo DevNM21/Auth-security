@@ -33,9 +33,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-mongoose.connect("mongodb://localhost:27017/verifyDB",{useNewUrlParser:true})
+const atlas_link = "mongodb+srv://admin-dev:mongodb@cluster0-rodtm.gcp.mongodb.net/";
+mongoose.connect(atlas_link + "user2_todoDB",{useNewUrlParser:true})
 mongoose.set('useCreateIndex', true);
 
+  
   
   
   const listSchema = {
