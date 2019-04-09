@@ -91,6 +91,7 @@ var transporter = nodemailer.createTransport({
 
 ////////////////Managing quotes
 const quotes = require(__dirname + "/quotes.json")
+console.log(quotes.length);
 
 
 
@@ -114,10 +115,16 @@ app.get("/",function(req,res){
           
           if(list.name === "Today"){
             console.log(list.items);
-            var num = Math.floor((Math.random() * 192) + 1);
+            var num = Math.floor((Math.random() * 294) + 1);
             // var quote = quotes[nunm].text
             
-        res.render("list", {listTitle:"Today",quote:quotes[num].text,author:quotes[num].author, newListItems : list.items,log : "Log Out",link: "/logout"})            
+        res.render("list", 
+        {listTitle:"Today",
+        quote:quotes[num].text,
+        author:quotes[num].author, 
+        newListItems : list.items,
+        log : "Your Account",
+        link: "/you"})            
           }else{
             console.log("Why the fuck isn't it working?");
             
@@ -438,6 +445,23 @@ app.route("/login")
         }
     })
 
+})
+///////////////////////////////Rendereing user account//////////////////////////////////////////
+
+app.get("/you",function(req,res){
+  if(req.isAuthenticated()){
+    User.findOne({username : req.user.username},function(err,foundUser){
+
+
+
+      res.render("user",{
+        username : foundUser.name,
+        email:foundUser.username,
+      })  
+    })
+    
+  }
+  
 })
 
 //////////////////////////////LOG OUT///////////////////////////////////////////////////////

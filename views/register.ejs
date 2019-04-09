@@ -1,18 +1,18 @@
 <%- include('header') %>
 <div class="container mt-5">
   <h1>Register</h1>
-
+<div class="container-fluid">
   <div class="row">
     <div class="col-sm-8">
       <div class="card">
         <div class="card-body">
 
           <!-- Makes POST request to /register route -->
-          <form action="/reg" method="POST">
+          <form action="/register" method="POST">
             <div class="form-group">
               <label for="text">Name</label>
               <center>
-              <input type="text" style="border:black;border-bottom-style: double" required class="form-control" id="name" name="name">
+              <input required class="form-control" id="name" name="name">
             </center>
             </div>
 
@@ -41,6 +41,7 @@
 
    
   </div>
+</div>
 </div>
 <script>
 function compare() {
