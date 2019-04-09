@@ -398,6 +398,8 @@ app.route("/login")
 
                   }else{
                   if (foundUser.active===true){
+                    console.log("isActive");
+                    
                     res.redirect("/secrets");
                   }else {
                     User.findOneAndDelete({username:req.user.username},function(err,res_){
