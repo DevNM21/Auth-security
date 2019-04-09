@@ -302,7 +302,7 @@ const mailOptions = {
     from: 'pydev21@gmail.com',
     to: req.user.username,
     subject: 'Tachyon verification',
-    html : "<h2>Please click the below link to verify your Email address with Tachyon</h2> <p>Hey there! Thanks for checking out my app! and by the way the link expires in 15 minutes(if you get an apllication error, you could be registerd then try again loggin in from home page)</p> <br> https://tachyon1.herokuapp.com/verify/" + code +"/" + stamp +"/" + foundUser._id 
+    html : "<h2>Please click the below link to verify your Email address with Tachyon</h2> <p>Hey there! Thanks for checking out my app! and by the way the link expires in 17 minutes(if you get an apllication error, you could be registerd then try again loggin in from home page)</p> <br> https://tachyon1.herokuapp.com/verify/" + code +"/" + stamp +"/" + foundUser._id 
     
 
   };
@@ -350,7 +350,7 @@ app.get("/verify/:sentCode/:sentStamp/:sentUser",function(req,res){
             foundUser.token = {};
             foundUser.save();
             console.log(foundUser);
-            res.redirect("/")
+            res.redirect("/secrets")
             
             
         }else{
