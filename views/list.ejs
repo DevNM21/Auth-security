@@ -8,13 +8,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href=<%= link %> > <h2> <%= log %> </h2></a>
+          <a class="nav-link" href=<%= link %> > <h4> <%= log %> </h4></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><h2> About</h2> </a>
+          <a class="nav-link" href="#"><h4> About</h4> </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="https://devakumar.ml"><h2> Contact</h2></a>
+            <a class="nav-link" href="https://devakumar.ml"><h4> Contact</h4></a>
           </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -29,6 +29,8 @@
 
 
   <section id="theBody">
+    
+    </div>
   <div class="box" id="heading">
     <h1> <%= listTitle %> </h1>
   </div>
@@ -54,7 +56,15 @@
         <button type="submit" class="plus" name="list" value=<%= listTitle %>>+</button>
       </form>
   </div>
-</section>
+
+
+  <div class="box2">
+      <p class="quote"><%= quote %></p>
+      <h5><%= author %></h5>
+          </div>
+
+
+        </section>
 <script>
 function checkScroll(){
     var startY = $('.navbar').height() * 2; //The point where the navbar changes in px

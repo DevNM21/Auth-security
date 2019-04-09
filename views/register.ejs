@@ -8,34 +8,70 @@
         <div class="card-body">
 
           <!-- Makes POST request to /register route -->
-          <form action="/register" method="POST">
+          <form action="/reg" method="POST">
+            <div class="form-group">
+              <label for="text">Name</label>
+              <center>
+              <input type="text" style="border:black;border-bottom-style: double" required class="form-control" id="name" name="name">
+            </center>
+            </div>
+
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" class="form-control" name="username">
+              <input type="email"
+              required class="form-control" id="username" name="username">
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" class="form-control" name="password">
+              <input required type="password" class="pass form-control" name="password" id="password">
             </div>
-            <button type="submit" class="btn btn-dark">Register</button>
+            <div class="form-group">
+              <label for="password">Enter Password again</label>
+              <input type="password"  required class="pass form-control" name="rep_password" id="rep_password">
+            </div>
+            
+            <button type "submit" id="hidden"></button>
           </form>
-
+          <center>
+          <button onclick="compare()" class="btn btn-dark">Register</button>
+        </center>
         </div>
       </div>
     </div>
 
-    <!-- <div class="col-sm-4">
-      <div class="card social-block">
-        <div class="card-body">
-          <a class="btn btn-block" href="/auth/google" role="button">
-            <i class="fab fa-google"></i>
-            Sign Up with Google
-          </a>
-        </div>
-      </div>
-    </div> -->
-
+   
   </div>
 </div>
+<script>
+function compare() {
+var pass_1 = document.getElementById('password').value;
+var name = document.getElementById('name').value;
+var email = document.getElementById('username').value;
+var pass_2 = document.getElementById('rep_password').value;
 
+if(name && email){
+
+if(pass_1 === pass_2){
+  swal({
+    text:"Thanks for registering!",icon: "success"
+  })
+
+  document.getElementById('hidden').click()
+}else{
+  swal({
+    text:"passwords don't match! please try again!",icon: "error"
+  })
+
+}
+
+}else{ 
+  swal({
+    text:"Please complete the form",icon: "info"
+  })
+
+}
+
+}
+
+</script>
 <%- include('header') %>

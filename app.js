@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
 // const encrypt = require("mongoose-encryption");
+const request = require("request");
 
 
 const session = require("express-session");
@@ -51,6 +52,7 @@ const userSchema = new mongoose.Schema({
         stamp : String
     },
     active : Boolean,
+    name : String,
     username : String,
     password:String, 
     lists:[listSchema]
@@ -87,14 +89,22 @@ var transporter = nodemailer.createTransport({
   });
 
 
+////////////////Managing quotes
+const quotes = require(__dirname + "/quotes.json")
+
+
 
 
 
 
 
 /////////////////////////////////////////////////////////HOME ROUTE////////////////////////////////////////////////////
-
+app.post("/reg",function(req,res){
+  console.log(req.body);
+  
+});
 app.get("/",function(req,res){
+
 
   if (req.isAuthenticated()){
     User.findOne({username : req.user.username , active : true},function(err,foundUser){
@@ -104,8 +114,10 @@ app.get("/",function(req,res){
           
           if(list.name === "Today"){
             console.log(list.items);
+            var num = Math.floor((Math.random() * 192) + 1);
+            // var quote = quotes[nunm].text
             
-        res.render("list", {listTitle:"Today", newListItems : list.items,log : "Log Out",link: "/logout"})            
+        res.render("list", {listTitle:"Today",quote:quotes[num].text,author:quotes[num].author, newListItems : list.items,log : "Log Out",link: "/logout"})            
           }else{
             console.log("Why the fuck isn't it working?");
             
@@ -123,7 +135,7 @@ app.get("/",function(req,res){
     })
     
   }else{
-    res.redirect("https://tachyon1.herokuapp.com/login")
+    res.redirect("/login")
     
   }
 
@@ -269,7 +281,7 @@ app.route("/register")
 
 .post(
     function(req,res){
-        User.register({username:req.body.username,active:false},req.body.password, function(err,user){
+        User.register({username:req.body.username,active:false,name:req.body.name},req.body.password, function(err,user){
             if(err){
                 console.log(err);
                 res.redirect("/register")
