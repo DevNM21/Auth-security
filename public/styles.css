@@ -5,7 +5,11 @@ html body {
   min-height: 1000px;
   font-family: 'helvetica neue';
 }
-
+#w{
+  position: relative;
+  /* left: 45%; */
+  /* top:45%; */
+}
 h1 {
   color: #fff;
   padding: 10px;

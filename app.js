@@ -311,7 +311,7 @@ transporter.sendMail(mailOptions, function(error, info){
       console.log(error);
     } else {
       console.log('Email sent: ' + info.response);
-      res.render("checkmail")
+      res.sendFile(__dirname + "/success.html")
     }
   });
 })
@@ -370,7 +370,6 @@ app.get("/verify/:sentCode/:sentStamp/:sentUser",function(req,res){
 })
 
 
-
 ////////////////////////////////////////////Login//////////////////////////////////////////////
 app.route("/login")
 .get(function(req,res){
@@ -388,9 +387,11 @@ app.route("/login")
         if(err){
             console.log(err);
             res.redirect("/login")
-        }else {
+        }else if(user) {
             passport.authenticate("local")(req,res,function(){
               // console.log(req.user);
+              
+              
             
                 User.findOne({username:req.user.username},function(err,foundUser){
                   if(err){
@@ -417,6 +418,11 @@ app.route("/login")
                   }
                 })
             })
+        }else if(!user){
+          req.send("User not found. PLease check the email/password you entered.")
+        }else{
+          console.log("something went wrong");
+          
         }
     })
 
