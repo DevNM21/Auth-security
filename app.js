@@ -393,24 +393,24 @@ app.route("/login")
               // console.log(req.user);
             
                 User.findOne({username:req.user.username},function(err,foundUser){
-                  if(!err){
-                    console.log(foundUser);
-                    
+                  if(err){
+                    console.log(err);
+
+                  }else{
                   if (foundUser.active===true){
                     res.redirect("/secrets");
                   }else {
-                    User.findOneAndDelete({username:req.username},function(err,res){
+                    User.findOneAndDelete({username:req.user.username},function(err,res_){
                       if(err){
                         console.log(err);
-                        
                       }else{
-                        console.log(res);
-                   
+                        console.log(res_);
+                        
+                        res.send("User deleted.It seems your email wasn't verified please try to register again and click on confirmation link sent to your registered email")
                         
                       }
                     })
-                  }}else {
-                    res.send("It seems your email wasn't verified please try to register again and click on confirmation link sent to your registered email")
+                  }
                     
                   }
                 })
