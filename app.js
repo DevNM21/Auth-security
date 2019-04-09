@@ -300,7 +300,7 @@ const mailOptions = {
     from: 'pydev21@gmail.com',
     to: req.user.username,
     subject: 'Tachyon verification',
-    html : "<h2>Please click the below link to verify your Email address with Tachyon</h2> <p>Hey there! Thanks for checking out my app! and by the way the link expires in 15 minutes </p> <br> localhost:3000/verify/" + code +"/" + stamp +"/" + foundUser._id 
+    html : "<h2>Please click the below link to verify your Email address with Tachyon</h2> <p>Hey there! Thanks for checking out my app! and by the way the link expires in 15 minutes </p> <br> https://tachyon1.herokuapp.com/verify" + code +"/" + stamp +"/" + foundUser._id 
     
 
   };
