@@ -1,4 +1,9 @@
 <%- include("header") -%>
+<script>
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
 <nav class="navbar transparent navbar-expand-lg navbar-light fixed-top sm-light">
     <a class="navbar-brand" href="#"><h1 class="brand"> Tachyon</h1></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +64,7 @@
 
 
   <div class="box2">
-    <form action="/addquote" method="POST">
+    <form id="formoid" action="/addquote" method="POST">
       <p class="quote"> " <%= quote %> "</p>
       <h5><%= author %></h5>
       <input type="hidden" name="quoteKey" value= <%= quoteKey %> </input>

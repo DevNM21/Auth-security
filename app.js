@@ -496,6 +496,8 @@ app.get("/you",function(req,res){
 
 ///////////////////////Adding User's fav quote/////////////////
 app.post("/addquote",function(req,res){
+  console.log(req.quoteKey);
+  
   var unpar = req.body.quoteKey;
   var quoteKey = parseInt(unpar)
   console.log(typeof(quoteKey));
@@ -509,7 +511,7 @@ app.post("/addquote",function(req,res){
       
       favQuotes.findOne({username:req.user.username},function(err,foundUser){
         if(foundUser){
-          console.log(foundUser);
+          console.log("quotes leng in DB");
           console.log(foundUser.quotes.length);
 
         if(foundUser.quotes.length<1){
@@ -525,11 +527,15 @@ app.post("/addquote",function(req,res){
         }else{
           
          foundUser.quotes.forEach(function (quote) {
-           console.log(quote);
+          //  console.log(quote);
            
-           if(quote.key != quoteKey){
+           if(quote.key === quoteKey){
+            console.log("quote exists");
+            res.redirect("/")
+            
+             
+           }else{
             console.log("doesn't exist :");
-            console.log(quote);
             
              
             var newQuote = {
@@ -539,10 +545,7 @@ app.post("/addquote",function(req,res){
             };
             foundUser.quotes.push(newQuote);
             foundUser.save().then(() => console.log('quote appendded'));;
-             
-           }else{
-             console.log("quote exists");
-             
+            
            }
          })
         }
@@ -559,7 +562,7 @@ app.post("/addquote",function(req,res){
   )
   
   
-  
+  // res.redirect("/")
 })
 
 //////////////////////////////LOG OUT///////////////////////////////////////////////////////
