@@ -34,7 +34,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const localLink = "mongodb://localhost:27017/"
-const atlas_link = "mongodb+srv://admin-dev:mongodb@cluster0-rodtm.gcp.mongodb.net/";
+const atlas_link = ""
 mongoose.connect(atlas_link + "user2_todoDB",{useNewUrlParser:true})
 mongoose.set('useCreateIndex', true);
 
@@ -100,7 +100,7 @@ var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: 'pydev21@gmail.com',
-      pass: 'daTTebayo@21'
+      pass: process.env.PASSWORD
     }
   });
 
