@@ -2,7 +2,7 @@
 require('dotenv').config();
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
-
+const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -33,7 +33,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+const localLink = "mongodb://localhost:27017/"
 const atlas_link = "mongodb+srv://admin-dev:mongodb@cluster0-rodtm.gcp.mongodb.net/";
 mongoose.connect(atlas_link + "user2_todoDB",{useNewUrlParser:true})
 mongoose.set('useCreateIndex', true);
@@ -44,6 +44,12 @@ mongoose.set('useCreateIndex', true);
   const listSchema = {
     name : String,
     items : [String]
+  }
+
+  const quoteSchema = {
+    key:Number,
+    quote : String,
+    author : String
   }
 
 const userSchema = new mongoose.Schema({
@@ -58,12 +64,22 @@ const userSchema = new mongoose.Schema({
     lists:[listSchema]
 });
 
+const favQuotesSchema = new mongoose.Schema({
+  username : String,
+  quotes : [quoteSchema]
+})
+
+
 userSchema.plugin(pasporLocalMongoose);
 // userSchema.plugin(encrypt, { secret: process.env.SECRET, encryptedFields:["password"] });
 
 const User = mongoose.model("User",userSchema)
 
 const List = mongoose.model("List",listSchema);
+
+const Quote = mongoose.model("Quote",quoteSchema);
+
+const favQuotes = mongoose.model("favQuotes",favQuotesSchema);
 
 const aList = new List ({
         name : "Today",
@@ -90,9 +106,13 @@ var transporter = nodemailer.createTransport({
 
 
 ////////////////Managing quotes
-const quotes = require(__dirname + "/quotes.json")
-console.log(quotes.length);
+const quotes = require(__dirname + "/output.json")
+// console.log(quotes);
 
+
+
+
+/////////////////////Experiment
 
 
 
@@ -122,6 +142,7 @@ app.get("/",function(req,res){
         {listTitle:"Today",
         quote:quotes[num].text,
         author:quotes[num].author, 
+        quoteKey : quotes[num].key,
         newListItems : list.items,
         log : "Your Account",
         link: "/you"})            
@@ -293,6 +314,10 @@ app.route("/register")
                 console.log(err);
                 res.redirect("/register")
             }else{
+              var quoteAC = new favQuotes({
+                username : req.body.username
+              });
+              quoteAC.save();
                 passport.authenticate("local")(req,res,function(){
                     res.redirect("/propose")
                 })
@@ -451,16 +476,89 @@ app.route("/login")
 app.get("/you",function(req,res){
   if(req.isAuthenticated()){
     User.findOne({username : req.user.username},function(err,foundUser){
+      favQuotes.findOne({username:req.user.username},function(err,FoundUser){
+        var likedQuotes = FoundUser.quotes
+      
+        res.render("user",{
+          likedQuotes : likedQuotes,
+          username : foundUser.name,
+          email:foundUser.username,
+        })        
+      })
 
 
-
-      res.render("user",{
-        username : foundUser.name,
-        email:foundUser.username,
-      })  
+  
     })
     
   }
+  
+})
+
+///////////////////////Adding User's fav quote/////////////////
+app.post("/addquote",function(req,res){
+  var unpar = req.body.quoteKey;
+  var quoteKey = parseInt(unpar)
+  console.log(typeof(quoteKey));
+  
+  
+  
+  quotes.forEach(function(quoted){
+    if(quoted.key === quoteKey){
+      console.log(quoted);
+      // console.log();
+      
+      favQuotes.findOne({username:req.user.username},function(err,foundUser){
+        if(foundUser){
+          console.log(foundUser);
+          console.log(foundUser.quotes.length);
+
+        if(foundUser.quotes.length<1){
+          console.log("user has no quotes yet");
+          
+          var newQuote = {
+            key : quoteKey,
+            quote : quoted.text,
+            author : quoted.author 
+          };
+          foundUser.quotes.push(newQuote);
+          foundUser.save().then(() => console.log('quote added'));;
+        }else{
+          
+         foundUser.quotes.forEach(function (quote) {
+           console.log(quote);
+           
+           if(quote.key != quoteKey){
+            console.log("doesn't exist :");
+            console.log(quote);
+            
+             
+            var newQuote = {
+              key : quoteKey,
+              quote : quoted.text,
+              author : quoted.author 
+            };
+            foundUser.quotes.push(newQuote);
+            foundUser.save().then(() => console.log('quote appendded'));;
+             
+           }else{
+             console.log("quote exists");
+             
+           }
+         })
+        }
+        }else{
+          console.log(err);
+          
+        }
+      })
+      
+    }
+    
+    
+    }
+  )
+  
+  
   
 })
 

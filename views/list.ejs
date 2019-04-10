@@ -59,8 +59,12 @@
 
 
   <div class="box2">
-      <p class="quote"><%= quote %></p>
+    <form action="/addquote" method="POST">
+      <p class="quote"> " <%= quote %> "</p>
       <h5><%= author %></h5>
+      <input type="hidden" name="quoteKey" value= <%= quoteKey %> </input>
+      <button type="submit" class="btn btn-info">Add to Favouirites</button>
+    </form>
           </div>
 
 
