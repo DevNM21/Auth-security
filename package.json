@@ -20,7 +20,7 @@
     "fs": "0.0.1-security",
     "lodash": "^4.17.11",
     "md5": "^2.2.1",
-    "mongoose": "^5.4.20",
+    "mongoose": "^5.7.5",
     "mongoose-encryption": "^2.0.2",
     "nodemailer": "^6.1.0",
     "passport": "^0.4.0",
