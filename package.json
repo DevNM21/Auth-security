@@ -18,7 +18,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "md5": "^2.2.1",
     "mongoose": "^5.4.20",
     "mongoose-encryption": "^2.0.2",
